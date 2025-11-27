@@ -1,0 +1,174 @@
+/* --------------------------------------------------------------------------
+   3. Layout Components
+   -------------------------------------------------------------------------- */
+.container {
+  width: min(90%, 1200px);
+  margin-inline: auto;
+}
+
+.section {
+  padding: var(--space-2xl) 0;
+}
+
+.section-title {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  margin-bottom: var(--space-xl);
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   5. Hero Section
+   -------------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  z-index: -1;
+}
+
+/* --------------------------------------------------------------------------
+   CSS SCROLL-DRIVEN ANIMATIONS (MODERN PARALLAX)
+
+   🎓 THE FUTURE OF SCROLL ANIMATIONS:
+   CSS scroll-driven animations let you tie animations directly to scroll
+   position — NO JAVASCRIPT REQUIRED! This is more performant than JS-based
+   solutions because the browser handles everything on the compositor thread.
+
+   📐 HOW IT WORKS:
+   1. animation-timeline: scroll(root) — links animation to scroll progress
+   2. animation-range: 0% 100% — animation plays from 0% to 100% scroll
+   3. The @keyframes define what happens at start (0%) and end (100%) of scroll
+
+   ⚠️ BROWSER SUPPORT:
+   This only works in Chrome 115+, Edge 115+. We use @supports to detect it
+   and provide a fallback for other browsers.
+
+   🔗 LEARN MORE: https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timeline
+   -------------------------------------------------------------------------- */
+@supports (animation-timeline: scroll()) {
+  .parallax-bg {
+    /*
+		 * SCROLL-LINKED ANIMATION
+		 *
+		 * - animation: parallaxShift — name of keyframes to use
+		 * - linear — no easing, direct 1:1 scroll mapping
+		 * - both — applies styles before and after animation
+		 */
+    animation: parallaxShift linear both;
+
+    /*
+		 * SCROLL TIMELINE
+		 *
+		 * scroll(root) = scroll progress of the root scroller (usually <html>)
+		 * Could also use scroll(nearest) for a scrollable container
+		 */
+    animation-timeline: scroll(root);
+
+    /*
+		 * ANIMATION RANGE
+		 *
+		 * 0% 100% = animation runs from top of page to bottom
+		 * You could use "entry 0% entry 100%" for element-specific triggers
+		 */
+    animation-range: 0% 100%;
+  }
+
+  @keyframes parallaxShift {
+    /*
+		 * PARALLAX EFFECT
+		 *
+		 * As user scrolls down:
+		 * - Background moves UP (negative translateY) — creates depth illusion
+		 * - Background scales UP slightly — adds visual interest
+		 *
+		 * -15% is subtle; -30% would be more dramatic but potentially nauseating
+		 */
+    from {
+      transform: translateY(0) scale(1);
+    }
+    to {
+      transform: translateY(-15%) scale(1.1);
+    }
+  }
+}
+
+/*
+ * FALLBACK FOR OLDER BROWSERS
+ *
+ * @supports not (animation-timeline: scroll()) targets browsers that DON'T
+ * support scroll-timeline. We give them a simpler parallax effect using
+ * background-attachment: fixed (works everywhere but has performance costs).
+ */
+@supports not (animation-timeline: scroll()) {
+  .parallax-bg {
+    background-attachment: fixed; /* Classic parallax technique */
+  }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-title {
+  font-size: var(--text-4xl);
+  font-weight: 800;
+  margin-bottom: var(--space-sm);
+  letter-spacing: -0.02em;
+}
+
+.hero-subtitle {
+  font-size: var(--text-xl);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-lg);
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: var(--space-xl);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.scroll-arrow {
+  width: 24px;
+  height: 24px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: rotate(45deg) translateY(0);
+  }
+  40% {
+    transform: rotate(45deg) translateY(10px);
+  }
+  60% {
+    transform: rotate(45deg) translateY(5px);
+  }
+}

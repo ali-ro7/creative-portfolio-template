@@ -1,0 +1,106 @@
+/* --------------------------------------------------------------------------
+   2. CSS RESET & BASE STYLES
+
+   🎓 WHY A CSS RESET?
+   Browsers apply default styles (margins, paddings, fonts) that vary between
+   browsers. A reset creates a consistent baseline so YOUR styles are in control.
+
+   💡 MODERN RESET PHILOSOPHY:
+   We're not removing ALL defaults (like the old "CSS Reset" approach).
+   Instead, we selectively normalize the most problematic differences while
+   keeping useful defaults like list markers in appropriate contexts.
+   -------------------------------------------------------------------------- */
+
+/*
+ * UNIVERSAL BOX-SIZING
+ *
+ * border-box includes padding and border in the element's total width/height.
+ * This makes sizing predictable: a 200px box stays 200px even with padding.
+ *
+ * Without this: width: 200px + padding: 20px = actual width of 240px 😱
+ * With this:    width: 200px + padding: 20px = actual width of 200px ✅
+ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * SMOOTH SCROLLING
+ *
+ * Native CSS smooth scrolling for anchor links. No JavaScript needed!
+ * This is automatically disabled when prefers-reduced-motion is set.
+ */
+html {
+  scroll-behavior: smooth;
+}
+
+/*
+ * BASE TYPOGRAPHY
+ *
+ * System font stack: Uses the user's OS font for familiarity and performance.
+ * No font files to download = faster page load!
+ *
+ * Line-height 1.6 is optimal for body text readability (1.5-1.7 range).
+ */
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base); /* Uses our fluid typography variable */
+  line-height: var(--line-height-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+/*
+ * RESPONSIVE IMAGES
+ *
+ * max-width: 100% prevents images from overflowing their containers.
+ * height: auto maintains aspect ratio when width changes.
+ * display: block removes the inline whitespace gap below images.
+ */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/*
+ * LINK RESET
+ *
+ * Inherit color from parent and remove underline by default.
+ * We'll add specific link styles where needed.
+ */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* --------------------------------------------------------------------------
+   SKIP LINK (ACCESSIBILITY)
+
+   🎓 WHY SKIP LINKS?
+   Screen reader and keyboard users shouldn't have to tab through the entire
+   navigation on every page. A skip link lets them jump directly to main content.
+
+   The link is hidden off-screen until focused, then slides into view.
+   This is a WCAG 2.1 Level A requirement for accessible navigation.
+   -------------------------------------------------------------------------- */
+.skip-link {
+  position: absolute;
+  top: -100%; /* Hidden above viewport */
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  background: var(--color-accent);
+  color: white;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 0 0 8px 8px; /* Rounded bottom corners only */
+  z-index: 1000; /* Above everything */
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 0; /* Slides into view when focused via keyboard */
+}
