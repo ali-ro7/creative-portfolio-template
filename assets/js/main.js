@@ -374,3 +374,17 @@ window.cleanupScrollObservers = () => {
   staggerObserver.disconnect();
   console.log("🧹 Observers cleaned up");
 };
+// ==============================
+// Carousel infinito
+// ==============================
+
+const track = document.querySelector(".carousel-track");
+
+if (track) {
+  const slides = [...track.children];
+
+  slides.forEach((slide) => {
+    const clone = slide.cloneNode(true);
+    track.appendChild(clone);
+  });
+}

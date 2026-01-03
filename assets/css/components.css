@@ -418,3 +418,55 @@
     gap: var(--space-md);
   }
 }
+
+/* =========================
+   Carousel
+========================= */
+
+.carousel-section {
+  width: 100%;
+  overflow: hidden;
+  padding: 8rem 0;
+  background-color: #fff;
+}
+
+.carousel {
+  max-width: 100vw;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  width: max-content;
+  animation: scroll-horizontal 30s linear infinite;
+}
+
+.carousel-track img {
+  width: clamp(100px, 30vw, 500px);
+  height: auto;
+  object-fit: cover;
+  margin-right: 1rem;
+  border-radius: 1rem;
+  flex-shrink: 0;
+}
+
+@keyframes scroll-horizontal {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Mobile tweak */
+@media (max-width: 768px) {
+  .carousel-section {
+    padding: 2.5rem 0;
+  }
+
+  .carousel-track img {
+    margin-right: 1rem;
+    border-radius: 0.75rem;
+  }
+}
