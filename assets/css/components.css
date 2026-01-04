@@ -426,8 +426,9 @@
 .carousel-section {
   width: 100%;
   overflow: hidden;
-  padding: 8rem 0;
+  padding: 1rem 0;
   background-color: #fff;
+  margin-top: -8rem;
 }
 
 .carousel {
@@ -442,7 +443,7 @@
 }
 
 .carousel-track img {
-  width: clamp(100px, 30vw, 500px);
+  width: clamp(100px, 20vw, 500px);
   height: auto;
   object-fit: cover;
   margin-right: 1rem;
