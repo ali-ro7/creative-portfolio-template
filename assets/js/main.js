@@ -348,6 +348,286 @@ document.addEventListener("DOMContentLoaded", () => {
   initActiveNav();
 
   console.log("🚀 Grade 1 Demo: Vanilla scroll animations initialized");
+  // build project list (order as in DOM)
+  projectList = Array.from(document.querySelectorAll(".see-more")).map((btn) =>
+    btn.getAttribute("data-project-id")
+  );
+  // compute modal size based on largest project content
+  computeModalSize();
+  window.addEventListener("resize", computeModalSize);
+});
+
+function computeModalSize() {
+  const panel = document.querySelector(".project-modal-panel");
+  if (!panel) return;
+
+  // find all .card-back-inner elements and measure their natural sizes
+  const backs = Array.from(
+    document.querySelectorAll(".card-back .card-back-inner")
+  );
+  let maxW = 0;
+  let maxH = 0;
+  backs.forEach((b) => {
+    // clone to measure off-DOM if necessary
+    const clone = b.cloneNode(true);
+    clone.style.position = "absolute";
+    clone.style.left = "-9999px";
+    clone.style.top = "-9999px";
+    clone.style.visibility = "hidden";
+    document.body.appendChild(clone);
+    const rect = clone.getBoundingClientRect();
+    maxW = Math.max(maxW, rect.width);
+    maxH = Math.max(maxH, rect.height);
+    clone.remove();
+  });
+
+  // apply min dimensions (with some padding)
+  const maxPanelW = Math.min(820, Math.floor(window.innerWidth * 0.92));
+  if (maxW > 0) panel.style.minWidth = Math.min(maxW + 64, maxPanelW) + "px";
+  if (maxH > 0)
+    panel.style.minHeight = Math.min(maxH + 64, window.innerHeight - 80) + "px";
+}
+/* ------------------------------------------------------------------
+   Project modal interaction
+   - Opens modal centered with content cloned from hidden .card-back
+   - Accessible: sets aria-hidden, focuses panel, restores focus on close
+   - Close via: backdrop click, close button, ESC key
+   ------------------------------------------------------------------ */
+const projectModal = document.getElementById("project-modal");
+const modalContent = projectModal?.querySelector(".project-modal-content");
+let lastFocusedTrigger = null;
+let galleryState = {
+  images: [],
+  index: 0,
+};
+let projectList = [];
+let currentProjectIndex = -1;
+
+function openProjectModal(contentEl, trigger) {
+  if (!projectModal || !modalContent) return;
+  // remember where focus came from
+  lastFocusedTrigger = trigger || document.activeElement;
+
+  // clone the node so we can show it in modal
+  modalContent.innerHTML = "";
+  const clone = contentEl.cloneNode(true);
+  clone.removeAttribute("hidden");
+  // If there's a .card-back-inner, append its children directly so the
+  // .project-modal-content grid can lay out gallery and meta as direct children
+  const inner = clone.querySelector(".card-back-inner");
+  if (inner) {
+    Array.from(inner.children).forEach((child) => {
+      modalContent.appendChild(child.cloneNode(true));
+    });
+  } else {
+    modalContent.appendChild(clone);
+  }
+
+  projectModal.setAttribute("aria-hidden", "false");
+
+  // prevent background scroll and hide main from assistive tech
+  document.body.classList.add("modal-open");
+  const mainEl = document.querySelector("main");
+  if (mainEl) mainEl.setAttribute("aria-hidden", "true");
+
+  // set focus to modal content for accessibility
+  const focusTarget = modalContent.querySelector("[tabindex]") || modalContent;
+  focusTarget.focus();
+
+  // initialize gallery if present
+  const gallery = modalContent.querySelector("[data-gallery]");
+  if (gallery) {
+    initModalGallery(gallery);
+  }
+
+  // set current project index based on projectList
+  if (trigger) {
+    const id = trigger.getAttribute("data-project-id");
+    currentProjectIndex = projectList.indexOf(id);
+  }
+
+  // listen for ESC key
+  document.addEventListener("keydown", handleModalKeydown);
+}
+
+function closeProjectModal() {
+  if (!projectModal || !modalContent) return;
+  projectModal.setAttribute("aria-hidden", "true");
+  modalContent.innerHTML = "";
+  document.removeEventListener("keydown", handleModalKeydown);
+  // restore background scroll and aria-hidden
+  document.body.classList.remove("modal-open");
+  const mainEl = document.querySelector("main");
+  if (mainEl) mainEl.removeAttribute("aria-hidden");
+  // restore focus
+  if (lastFocusedTrigger && typeof lastFocusedTrigger.focus === "function") {
+    lastFocusedTrigger.focus();
+  }
+
+  // cleanup gallery state and controls
+  galleryState.images = [];
+  galleryState.index = 0;
+  const controls = document.querySelectorAll(".gallery-controls");
+  controls.forEach((c) => c.remove());
+}
+
+function handleModalKeydown(e) {
+  if (e.key === "Escape") {
+    closeProjectModal();
+  } else if (e.key === "ArrowRight") {
+    modalNextImage();
+  } else if (e.key === "ArrowLeft") {
+    modalPrevImage();
+  }
+}
+
+// Navigate projects in modal
+function openProjectByIndex(idx, trigger) {
+  if (!projectList.length) return;
+  idx = (idx + projectList.length) % projectList.length;
+  const id = projectList[idx];
+  const contentEl = document.getElementById(`project-${id}`);
+  if (!contentEl) return;
+  // find the triggering element (if any) in the grid to restore focus later
+  const triggerEl = document.querySelector(
+    `.see-more[data-project-id="${id}"]`
+  );
+  openProjectModal(contentEl, triggerEl || trigger);
+}
+
+// modal prev/next handlers
+document.addEventListener("click", (e) => {
+  if (e.target.matches("[data-modal-prev]")) {
+    // open previous project
+    openProjectByIndex(currentProjectIndex - 1);
+  }
+  if (e.target.matches("[data-modal-next]")) {
+    openProjectByIndex(currentProjectIndex + 1);
+  }
+});
+
+// Open modal when see-more buttons are clicked
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest && e.target.closest(".see-more");
+  if (!btn) return;
+  e.preventDefault();
+
+  // find project id and hidden content
+  const id = btn.getAttribute("data-project-id");
+  if (!id) return;
+
+  const contentEl = document.getElementById(`project-${id}`);
+  if (!contentEl) return;
+
+  // Open modal immediately (no flip)
+  openProjectModal(contentEl, btn);
+});
+
+// Close handlers (backdrop and close button)
+document.addEventListener("click", (e) => {
+  if (e.target.matches("[data-modal-close]")) {
+    closeProjectModal();
+  }
+});
+
+/* -------------------------
+   Modal gallery functions
+   ------------------------- */
+function initModalGallery(galleryEl) {
+  // all images inside source gallery (the cloned gallery is already inside modal)
+  const imgs = Array.from(galleryEl.querySelectorAll("img"));
+  galleryState.images = imgs;
+  galleryState.index = 0;
+
+  // wrap images in container and show only the active one
+  imgs.forEach((img, i) => {
+    img.dataset.galleryIndex = i;
+    img.style.display = i === 0 ? "block" : "none";
+  });
+
+  // add controls (prev/next + indicators)
+  let controls = modalContent.querySelector(".gallery-controls");
+  if (!controls) {
+    controls = document.createElement("div");
+    controls.className = "gallery-controls";
+    controls.innerHTML = `
+      <div>
+        <button class="gallery-btn" data-gallery-prev aria-label="Anterior">◀</button>
+        <button class="gallery-btn" data-gallery-next aria-label="Siguiente">▶</button>
+      </div>
+      <div class="gallery-indicators" aria-hidden="true"></div>
+    `;
+    galleryEl.after(controls);
+  }
+
+  const indicators = controls.querySelector(".gallery-indicators");
+  indicators.innerHTML = "";
+  imgs.forEach((_, i) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.dataset.indicatorIndex = i;
+    if (i === 0) btn.classList.add("active");
+    btn.addEventListener("click", () => showImage(i));
+    indicators.appendChild(btn);
+  });
+
+  controls
+    .querySelector("[data-gallery-prev]")
+    .addEventListener("click", modalPrevImage);
+  controls
+    .querySelector("[data-gallery-next]")
+    .addEventListener("click", modalNextImage);
+}
+
+function showImage(i) {
+  const imgs = galleryState.images;
+  if (!imgs || imgs.length === 0) return;
+  i = (i + imgs.length) % imgs.length;
+  imgs.forEach((img, idx) => {
+    img.style.display = idx === i ? "block" : "none";
+  });
+  galleryState.index = i;
+
+  // update indicators
+  const indicators = modalContent.querySelectorAll(
+    ".gallery-indicators button"
+  );
+  indicators.forEach((btn) => btn.classList.remove("active"));
+  const active = modalContent.querySelector(
+    `.gallery-indicators button[data-indicator-index="${i}"]`
+  );
+  if (active) active.classList.add("active");
+}
+
+function modalNextImage() {
+  showImage(galleryState.index + 1);
+}
+
+function modalPrevImage() {
+  showImage(galleryState.index - 1);
+}
+
+// Prevent focus from escaping (simple trap): focus the panel when tabbing past
+projectModal?.addEventListener("keydown", (e) => {
+  if (e.key !== "Tab") return;
+  const focusable = projectModal.querySelectorAll(
+    "a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex='-1'])"
+  );
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (!first) return;
+
+  if (e.shiftKey) {
+    if (document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    }
+  } else {
+    if (document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
 });
 
 // ==========================================================================
