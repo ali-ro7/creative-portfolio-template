@@ -388,3 +388,35 @@ if (track) {
     track.appendChild(clone);
   });
 }
+
+//ANIMACION TEXTO H1
+
+const title = document.querySelector(".hero-title");
+const letters = title.textContent.split("");
+title.textContent = ""; // Limpiamos el contenido
+
+letters.forEach((letter) => {
+  const span = document.createElement("span");
+  span.textContent = letter;
+  span.classList.add("letter");
+  title.appendChild(span);
+});
+gsap.from(".letter", {
+  opacity: 0,
+  y: 50,
+  rotation: 360,
+  duration: 1,
+  stagger: {
+    amount: 1,
+    from: "random", // hace que las letras aparezcan en orden aleatorio
+  },
+  ease: "back.out(1.7)",
+});
+document.querySelectorAll(".letter").forEach((letter) => {
+  letter.addEventListener("mouseenter", () => {
+    gsap.to(letter, { scale: 1.5, color: "#f7bfd9", duration: 0.3 });
+  });
+  letter.addEventListener("mouseleave", () => {
+    gsap.to(letter, { scale: 1, color: "#000", duration: 0.3 });
+  });
+});

@@ -118,7 +118,7 @@
 }
 
 .project-image {
-  aspect-ratio: 4/3;
+  aspect-ratio: 6/9;
   overflow: hidden;
 }
 
@@ -470,4 +470,24 @@
     margin-right: 1rem;
     border-radius: 0.75rem;
   }
+}
+/* =========================
+   EFECTO HOOVER TEXTO H1
+========================= */
+.hero-title {
+  display: flex;
+  justify-content: center;
+  font-family: "Paytone One", sans-serif;
+  font-size: 4rem;
+  cursor: default;
+}
+
+.hero-title .letter {
+  display: inline-block;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.hero-title .letter:hover {
+  transform: scale(1.2);
+  color: #a4003c; /* color pastel divertido */
 }
