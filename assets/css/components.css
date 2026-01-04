@@ -106,7 +106,7 @@
 }
 
 .project-card {
-  background: var(--color-bg-alt);
+  background: #f0f0f0;
   border-radius: 16px;
   overflow: hidden;
   transition: transform 0.3s, box-shadow 0.3s;
