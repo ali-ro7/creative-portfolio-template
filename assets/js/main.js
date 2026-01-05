@@ -348,13 +348,84 @@ document.addEventListener("DOMContentLoaded", () => {
   initActiveNav();
 
   console.log("🚀 Grade 1 Demo: Vanilla scroll animations initialized");
-  // build project list (order as in DOM)
-  projectList = Array.from(document.querySelectorAll(".see-more")).map((btn) =>
-    btn.getAttribute("data-project-id")
+  // build project list (order as in DOM) — prefer .card-back IDs, fallback to .see-more
+  const backs = Array.from(document.querySelectorAll(".card-back")).map((el) =>
+    el.id.replace(/^project-/, "")
   );
+  if (backs.length) projectList = backs;
+  else
+    projectList = Array.from(document.querySelectorAll(".see-more")).map(
+      (btn) => btn.getAttribute("data-project-id")
+    );
   // compute modal size based on largest project content
   computeModalSize();
   window.addEventListener("resize", computeModalSize);
+
+  // Attach click handlers directly to project cards as a robust fallback
+  document.querySelectorAll(".project-card").forEach((card) => {
+    card.addEventListener("click", (e) => {
+      // ignore clicks on interactive elements inside the card
+      if (e.target.closest("a, button, input, textarea, select")) return;
+
+      // try to find a hidden .card-back inside this card
+      const contentEl = card.querySelector(".card-back") || null;
+      if (contentEl) {
+        e.preventDefault();
+        console.log("Opening modal from card click (direct):", card);
+        openProjectModal(contentEl, card);
+        return;
+      }
+
+      // fallback: try to resolve by data-project-id on the card
+      const id =
+        card.getAttribute("data-project-id") ||
+        card.querySelector(".see-more")?.getAttribute("data-project-id");
+      if (id) {
+        const el = document.getElementById(`project-${id}`);
+        if (el) {
+          e.preventDefault();
+          console.log("Opening modal from card click (fallback id):", id);
+          openProjectModal(el, card);
+        }
+      }
+    });
+  });
+});
+
+// Extra fallback: direct card click handler that searches for a .card-back inside the card
+// This helps when DOM structure is customized or data attributes are missing.
+document.addEventListener("click", (e) => {
+  const card = e.target.closest && e.target.closest(".project-card");
+  if (!card) return;
+  if (e.target.closest("a, button, input, textarea, select")) return;
+
+  // If an existing handler already opened the modal, don't double-handle
+  const modalOpen =
+    document.getElementById("project-modal")?.getAttribute("aria-hidden") ===
+    "false";
+  if (modalOpen) return;
+
+  // Look for a .card-back element inside the card (hidden source)
+  const embeddedBack = card.querySelector(".card-back");
+  if (embeddedBack) {
+    e.preventDefault();
+    console.debug("Opening modal from embedded .card-back inside card");
+    openProjectModal(embeddedBack, card);
+    return;
+  }
+
+  // Fallback: try to find a project id on card or inside and open matching #project-id
+  const id =
+    card.getAttribute("data-project-id") ||
+    card.querySelector(".see-more")?.getAttribute("data-project-id");
+  if (id) {
+    const contentEl = document.getElementById(`project-${id}`);
+    if (contentEl) {
+      e.preventDefault();
+      console.debug("Opening modal from fallback id:", id);
+      openProjectModal(contentEl, card);
+    }
+  }
 });
 
 function computeModalSize() {
@@ -404,7 +475,18 @@ let projectList = [];
 let currentProjectIndex = -1;
 
 function openProjectModal(contentEl, trigger) {
-  if (!projectModal || !modalContent) return;
+  // Debugging: log presence of key DOM refs and incoming trigger
+  console.debug("openProjectModal invoked", {
+    projectModal: !!projectModal,
+    modalContent: !!modalContent,
+    trigger,
+  });
+  if (!projectModal || !modalContent) {
+    console.error(
+      "openProjectModal: missing projectModal or modalContent; aborting open."
+    );
+    return;
+  }
   // remember where focus came from
   lastFocusedTrigger = trigger || document.activeElement;
 
@@ -440,11 +522,22 @@ function openProjectModal(contentEl, trigger) {
     initModalGallery(gallery);
   }
 
-  // set current project index based on projectList
-  if (trigger) {
-    const id = trigger.getAttribute("data-project-id");
-    currentProjectIndex = projectList.indexOf(id);
+  // Resolve currentProjectIndex: prefer data-project-id on trigger, fallback to contentEl id
+  let resolvedId = null;
+  if (trigger && trigger.getAttribute)
+    resolvedId = trigger.getAttribute("data-project-id");
+  if (!resolvedId && contentEl && contentEl.id) {
+    resolvedId = contentEl.id.replace(/^project-/, "");
   }
+  if (resolvedId) {
+    currentProjectIndex = projectList.indexOf(resolvedId);
+  }
+  console.debug(
+    "openProjectModal resolved currentProjectIndex=",
+    currentProjectIndex,
+    "resolvedId=",
+    resolvedId
+  );
 
   // listen for ESC key
   document.addEventListener("keydown", handleModalKeydown);
@@ -484,6 +577,7 @@ function openProjectByIndex(idx, trigger) {
   if (!projectList.length) return;
   idx = (idx + projectList.length) % projectList.length;
   const id = projectList[idx];
+  console.debug("openProjectByIndex called with idx=", idx, "resolved id=", id);
   const contentEl = document.getElementById(`project-${id}`);
   if (!contentEl) return;
   // find the triggering element (if any) in the grid to restore focus later
@@ -496,29 +590,42 @@ function openProjectByIndex(idx, trigger) {
 // modal prev/next handlers
 document.addEventListener("click", (e) => {
   if (e.target.matches("[data-modal-prev]")) {
+    console.debug(
+      "modal prev clicked, currentProjectIndex=",
+      currentProjectIndex
+    );
     // open previous project
     openProjectByIndex(currentProjectIndex - 1);
   }
   if (e.target.matches("[data-modal-next]")) {
+    console.debug(
+      "modal next clicked, currentProjectIndex=",
+      currentProjectIndex
+    );
     openProjectByIndex(currentProjectIndex + 1);
   }
 });
 
-// Open modal when see-more buttons are clicked
+// Open modal when clicking on a project card (ignore internal links/buttons)
 document.addEventListener("click", (e) => {
-  const btn = e.target.closest && e.target.closest(".see-more");
-  if (!btn) return;
-  e.preventDefault();
+  const card = e.target.closest && e.target.closest(".project-card");
+  if (!card) return;
 
-  // find project id and hidden content
-  const id = btn.getAttribute("data-project-id");
+  // ignore clicks on interactive elements inside the card
+  if (e.target.closest("a, button, input, textarea, select")) return;
+
+  // attempt to find a project id on the card; fallback to nearest .see-more data if present
+  let id = card.getAttribute("data-project-id");
+  if (!id) {
+    const btn = card.querySelector(".see-more[data-project-id]");
+    if (btn) id = btn.getAttribute("data-project-id");
+  }
   if (!id) return;
 
   const contentEl = document.getElementById(`project-${id}`);
   if (!contentEl) return;
 
-  // Open modal immediately (no flip)
-  openProjectModal(contentEl, btn);
+  openProjectModal(contentEl, card);
 });
 
 // Close handlers (backdrop and close button)
