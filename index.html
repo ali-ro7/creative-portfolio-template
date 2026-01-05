@@ -147,7 +147,7 @@
                 />
               </div>
               <div class="project-content">
-                <h3>Libro Van Gogh</h3>
+                <h3>Libros</h3>
                 <div class="project-tags"></div>
                 <a
                   href="#"
@@ -186,40 +186,84 @@
                 <!-- Hidden card back content to be shown in modal -->
                 <div class="card-back" hidden id="project-van-gogh">
                   <div class="card-back-inner">
-                    <div class="project-gallery" data-gallery>
-                      <img
-                        src="assets/images/Van Gogh.jpeg"
-                        alt="Libro Van Gogh - 1"
-                      />
-                      <img
-                        src="assets/images/Van Gogh.jpeg"
-                        alt="Libro Van Gogh - 2"
-                      />
-                      <img
-                        src="assets/images/Van Gogh.jpeg"
-                        alt="Libro Van Gogh - 3"
-                      />
-                      <img
-                        src="assets/images/Van Gogh.jpeg"
-                        alt="Libro Van Gogh - 4"
-                      />
+                    <div class="gallery-stack">
+                      <div
+                        class="project-gallery van-gogh-gallery"
+                        data-gallery
+                      >
+                        <img
+                          src="assets/images/Van Gogh 2.jpg"
+                          alt="Libro Van Gogh - 1"
+                        />
+                        <img
+                          src="assets/images/Van Gogh 3.jpg"
+                          alt="Libro Van Gogh - 2"
+                        />
+                        <img
+                          src="assets/images/Van Gogh 4.jpg"
+                          alt="Libro Van Gogh - 3"
+                        />
+                        <img
+                          src="assets/images/Van Gogh 6.jpg"
+                          alt="Libro Van Gogh - 4"
+                        />
+                      </div>
+
+                      <!-- Libro Estrellas gallery below Van Gogh images -->
+                      <div
+                        class="project-gallery estrellas-gallery"
+                        data-gallery
+                      >
+                        <img
+                          src="assets/images/Libro Estrellas 1.jpg"
+                          alt="Libro Estrellas 1"
+                        />
+                        <img
+                          src="assets/images/Libro Estrellas 2.jpg"
+                          alt="Libro Estrellas 2"
+                        />
+                        <img
+                          src="assets/images/Libro Estrella 3.jpg"
+                          alt="Libro Estrellas 3"
+                        />
+                      </div>
                     </div>
-                    <div class="project-meta">
-                      <h3>Libro Van Gogh</h3>
-                      <p class="project-description">
-                        Proyecto editorial que explora la vida y obra de Van
-                        Gogh a través de ilustraciones y ensayos curados.
-                        Incluye investigación visual y diseño de layout.
-                      </p>
-                      <ul class="project-details">
-                        <li><strong>Año:</strong> 2024</li>
-                        <li>
-                          <strong>Rol:</strong> Diseño editorial, Ilustración
-                        </li>
-                        <li>
-                          <strong>Tecnologías:</strong> InDesign, Procreate
-                        </li>
-                      </ul>
+
+                    <div class="meta-column">
+                      <div class="project-meta">
+                        <h3>Libro Van Gogh</h3>
+                        <p class="project-description">
+                          Proyecto editorial que explora la vida y obra de Van
+                          Gogh a través de ilustraciones y ensayos curados.
+                          Incluye investigación visual y diseño de layout.
+                        </p>
+                        <ul class="project-details">
+                          <li><strong>Año:</strong> 2024</li>
+                          <li>
+                            <strong>Rol:</strong> Diseño editorial, Ilustración
+                          </li>
+                          <li>
+                            <strong>Tecnologías:</strong> InDesign, Procreate
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div class="project-meta project-meta-extra">
+                        <h3>La Niña que pintaba Estrellas</h3>
+                        <p class="project-description">
+                          Diseño de libro infantil que narra la historia de una
+                          niña que pinta estrellas en el cielo.
+                        </p>
+                        <ul class="project-details">
+                          <li><strong>Año:</strong> 2024</li>
+                          <li>
+                            <strong>Rol:</strong> Diseño editorial, Ilustración
+                          </li>
+                          <li>
+                            <strong>Tecnologías:</strong> InDesign, Procreate
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -651,6 +695,9 @@
         >
           &times;
         </button>
+        <div class="project-modal-content" tabindex="0">
+          <!-- Project content will be injected here -->
+        </div>
         <div class="modal-controls">
           <button
             class="modal-prev"
@@ -666,9 +713,6 @@
           >
             ›
           </button>
-        </div>
-        <div class="project-modal-content" tabindex="0">
-          <!-- Project content will be injected here -->
         </div>
       </div>
     </div>
