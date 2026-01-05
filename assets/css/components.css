@@ -173,7 +173,7 @@
 .btn-ghost {
   background: transparent;
   color: var(--color-text);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: 1px solid #dddddd;
   padding: 0.45rem 0.85rem;
   border-radius: 8px;
   opacity: 1;
@@ -195,7 +195,7 @@
 .btn-ghost:hover,
 .btn-ghost:focus {
   background: var(--color-accent);
-  color: var(--color-primary-foreground, #000);
+  color: var(--color-primary-foreground, #ffffff);
   transform: translateY(-2px);
 }
 
@@ -274,7 +274,7 @@
 }
 @media (min-width: 640px) {
   .image-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 .image-grid img {
@@ -310,8 +310,25 @@
 }
 @media (min-width: 640px) {
   .project-modal[aria-hidden="false"] .project-gallery {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
+}
+
+/* Gallery image states */
+.project-gallery .gallery-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.project-gallery .gallery-image:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+.project-gallery .gallery-image.gallery-active {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 4px;
 }
 
 /* Modal navigation buttons (prev/next) */
@@ -350,44 +367,7 @@
   outline-offset: 2px;
 }
 
-/* Controls */
-.gallery-controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--space-md);
-  margin-top: var(--space-sm);
-}
-.gallery-btn {
-  background: transparent;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  padding: 0.35rem 0.6rem;
-  border-radius: 6px;
-  cursor: pointer;
-}
-.gallery-indicators {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-.gallery-indicators button {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.12);
-  border: none;
-}
-.gallery-indicators button.active {
-  background: var(--color-accent);
-}
-
-/* Larger hit targets for touch */
-.gallery-btn,
-.gallery-indicators button {
-  min-width: 44px;
-  min-height: 32px;
-  padding: 0.35rem;
-}
+/* gallery-controls removed: gallery navigation is not needed */
 
 /* Layout: gallery above / meta below on small screens, side-by-side on wider */
 @media (min-width: 768px) {
@@ -797,5 +777,5 @@ body.modal-open {
 
 .hero-title .letter:hover {
   transform: scale(1.2);
-  color: #a4003c; /* color pastel divertido */
+  color: #5a0021; /* color pastel divertido */
 }

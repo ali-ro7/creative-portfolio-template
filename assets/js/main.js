@@ -467,8 +467,6 @@ function closeProjectModal() {
   // cleanup gallery state and controls
   galleryState.images = [];
   galleryState.index = 0;
-  const controls = document.querySelectorAll(".gallery-controls");
-  controls.forEach((c) => c.remove());
 }
 
 function handleModalKeydown(e) {
@@ -542,41 +540,10 @@ function initModalGallery(galleryEl) {
   // wrap images in container and show only the active one
   imgs.forEach((img, i) => {
     img.dataset.galleryIndex = i;
-    img.style.display = i === 0 ? "block" : "none";
+    img.classList.add("gallery-image");
+    // ensure all images are visible in the modal grid
+    img.style.display = "block";
   });
-
-  // add controls (prev/next + indicators)
-  let controls = modalContent.querySelector(".gallery-controls");
-  if (!controls) {
-    controls = document.createElement("div");
-    controls.className = "gallery-controls";
-    controls.innerHTML = `
-      <div>
-        <button class="gallery-btn" data-gallery-prev aria-label="Anterior">◀</button>
-        <button class="gallery-btn" data-gallery-next aria-label="Siguiente">▶</button>
-      </div>
-      <div class="gallery-indicators" aria-hidden="true"></div>
-    `;
-    galleryEl.after(controls);
-  }
-
-  const indicators = controls.querySelector(".gallery-indicators");
-  indicators.innerHTML = "";
-  imgs.forEach((_, i) => {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.dataset.indicatorIndex = i;
-    if (i === 0) btn.classList.add("active");
-    btn.addEventListener("click", () => showImage(i));
-    indicators.appendChild(btn);
-  });
-
-  controls
-    .querySelector("[data-gallery-prev]")
-    .addEventListener("click", modalPrevImage);
-  controls
-    .querySelector("[data-gallery-next]")
-    .addEventListener("click", modalNextImage);
 }
 
 function showImage(i) {
@@ -584,19 +551,10 @@ function showImage(i) {
   if (!imgs || imgs.length === 0) return;
   i = (i + imgs.length) % imgs.length;
   imgs.forEach((img, idx) => {
-    img.style.display = idx === i ? "block" : "none";
+    if (idx === i) img.classList.add("gallery-active");
+    else img.classList.remove("gallery-active");
   });
   galleryState.index = i;
-
-  // update indicators
-  const indicators = modalContent.querySelectorAll(
-    ".gallery-indicators button"
-  );
-  indicators.forEach((btn) => btn.classList.remove("active"));
-  const active = modalContent.querySelector(
-    `.gallery-indicators button[data-indicator-index="${i}"]`
-  );
-  if (active) active.classList.add("active");
 }
 
 function modalNextImage() {
