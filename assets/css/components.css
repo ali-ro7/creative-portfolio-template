@@ -583,6 +583,14 @@ body.modal-open {
   text-align: center;
 }
 
+/* 404 page: make the inline PNG smaller and responsive */
+.hero-404 .hero-content img {
+  width: clamp(160px, 50vw, 1000px);
+  height: auto;
+  display: block;
+  margin: 1rem auto 0 auto;
+}
+
 .contact-content p {
   font-size: var(--text-lg);
   color: var(--color-text-muted);
