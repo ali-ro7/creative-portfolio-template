@@ -17,11 +17,11 @@ La idea de este proyecto consiste en el diseño y desarrollo de un portfolio web
 
 # Stack tecnológico utilizado
 
-- HTML5 para la estructura del sitio
-- CSS3 para la maquetación y estilos
-- JavaScript vanilla para la interacción
-- Visual Studio Code para el desarrollo del proyecto
-- GitHub Pages para el control de versiones y despliegue estático
+- HTML5
+- CSS3
+- JavaScript vanilla
+- Visual Studio Code
+- GitHub Pages
 
 # Guía de personalización
 
@@ -91,6 +91,8 @@ Página de error personalizada para GitHub Pages.
 Estructura total de todo el contenido de la página web: secciones, textos, imágenes, etc.
 
 # Demo
+
+Capturas de pantalla de la página web:
 
 ![Demo 1](https://github.com/ali-ro7/creative-portfolio-template/blob/5f80b2ddd4c3a82ad1ccd490e8f244d0dff47341/assets/images/Demo%201.png)
 
