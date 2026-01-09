@@ -40,3 +40,50 @@
 .nav-links a:focus {
   color: var(--color-accent);
 }
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  width: 24px;
+  height: 2px;
+  background: var(--color-text-muted);
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+/*media query for mobile navigation*/
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: flex;
+    z-index: 200;
+  }
+
+  .nav-container {
+    position: relative;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    right: 0;
+
+    background: rgba(218, 218, 218, 0.95);
+    backdrop-filter: blur(10px);
+
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+
+    overflow: hidden;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+
+    z-index: 150;
+  }
+}

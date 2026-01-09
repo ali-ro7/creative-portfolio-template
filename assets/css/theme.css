@@ -94,15 +94,12 @@
 
   /*
 	 * COLOR PALETTE
-	 *
-	 * Dark theme with indigo accent. Limited palette = cohesive design.
-	 * Semantic naming (bg, text, accent) makes colors self-documenting.
 	 */
-  --color-bg: #ffffff; /* Near-black background */
-  --color-bg-alt: #1a1a1a; /* Slightly lighter for depth/sections */
-  --color-text: #ff0d55; /* Off-white for readability (not pure white) */
+  --color-bg: #ffffff; /* whitebackground */
+  --color-bg-alt: #1a1a1a; /* dark color depth/sections */
+  --color-text: #ff0d55; /* primary brand color */
   --color-text-muted: #898989; /* Subdued text for secondary content */
-  --color-accent: #ff0d55; /* Indigo — primary brand color */
+  --color-accent: #ff0d55; /* — primary brand color */
 
   /*
 	 * ANIMATION TOKENS

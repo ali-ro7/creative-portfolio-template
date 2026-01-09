@@ -835,3 +835,12 @@ document.querySelectorAll(".letter").forEach((letter) => {
     gsap.to(letter, { scale: 1, color: "#000", duration: 0.3 });
   });
 });
+
+/*navegacion responsive*/
+
+const navToggle = document.querySelector(".nav-toggle");
+const navMobile = document.querySelector(".nav-links-mobile");
+
+navToggle.addEventListener("click", () => {
+  navMobile.classList.toggle("active");
+});

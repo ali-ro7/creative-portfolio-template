@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Ali designs</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -46,6 +46,11 @@
     <nav class="nav">
       <div class="nav-container">
         <a href="#" class="nav-logo">Portfolio</a>
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
         <ul class="nav-links">
           <li><a href="#hero">Home</a></li>
           <li><a href="#about">About</a></li>
@@ -146,9 +151,7 @@
                 />
               </div>
               <div class="project-content">
-                <h3>Libros</h3>
-                <div class="project-tags"></div>
-                <!-- 'Ver más' removed — click the card to open the modal -->
+                <h3>Books</h3>
 
                 <!-- Hidden card back content to be shown in modal -->
                 <div class="card-back" hidden id="project-van-gogh">
@@ -198,38 +201,17 @@
 
                     <div class="meta-column">
                       <div class="project-meta">
-                        <h3>Libro Van Gogh</h3>
+                        <h3>Van Gogh + La Niña que Pintaba Estrellas</h3>
                         <p class="project-description">
-                          Proyecto editorial que explora la vida y obra de Van
-                          Gogh a través de ilustraciones y ensayos curados.
-                          Incluye investigación visual y diseño de layout.
+                          "Vincent Van Gogh" is an editorial book that explores
+                          the life and works of the artist through a more visual
+                          side.
                         </p>
-                        <ul class="project-details">
-                          <li><strong>Año:</strong> 2024</li>
-                          <li>
-                            <strong>Rol:</strong> Diseño editorial, Ilustración
-                          </li>
-                          <li>
-                            <strong>Tecnologías:</strong> InDesign, Procreate
-                          </li>
-                        </ul>
-                      </div>
-
-                      <div class="project-meta project-meta-extra">
-                        <h3>La Niña que pintaba Estrellas</h3>
-                        <p class="project-description">
-                          Diseño de libro infantil que narra la historia de una
-                          niña que pinta estrellas en el cielo.
+                        <p>
+                          "La Niña que Pintaba Estrellas" is a book that tells
+                          the story of a girl who painted stars with a magic
+                          brush.
                         </p>
-                        <ul class="project-details">
-                          <li><strong>Año:</strong> 2024</li>
-                          <li>
-                            <strong>Rol:</strong> Diseño editorial, Ilustración
-                          </li>
-                          <li>
-                            <strong>Tecnologías:</strong> InDesign, Procreate
-                          </li>
-                        </ul>
                       </div>
                     </div>
                   </div>
@@ -245,9 +227,7 @@
                 />
               </div>
               <div class="project-content">
-                <h3>Carteles</h3>
-                <div class="project-tags"></div>
-                <!-- 'Ver más' removed — click the card to open the modal -->
+                <h3>Posters</h3>
                 <div class="card-back" hidden id="project-carteles">
                   <div class="card-back-inner">
                     <div class="project-gallery" data-gallery>
@@ -260,16 +240,13 @@
                         alt="Carteles - 2"
                       />
                     </div>
-                    <div class="project-meta">
-                      <h3>Carteles</h3>
-                      <p class="project-description">
-                        Serie de carteles experimentales con técnicas mixtas y
-                        tipografía personalizada.
-                      </p>
-                      <ul class="project-details">
-                        <li><strong>Año:</strong> 2023</li>
-                        <li><strong>Rol:</strong> Dirección de arte</li>
-                      </ul>
+                    <div class="meta-column">
+                      <div class="project-meta">
+                        <h3>Theater Posters</h3>
+                        <p class="project-description">
+                          Theater posters about Tim Burton movies.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -285,8 +262,6 @@
               </div>
               <div class="project-content">
                 <h3>WallPaper</h3>
-                <div class="project-tags"></div>
-                <!-- 'Ver más' removed — click the card to open the modal -->
                 <div class="card-back" hidden id="project-wallpaper">
                   <div class="card-back-inner">
                     <div class="project-gallery" data-gallery>
@@ -303,15 +278,15 @@
                         alt="Wallpaper - 3"
                       />
                     </div>
-                    <div class="project-meta">
-                      <h3>WallPaper</h3>
-                      <p class="project-description">
-                        Colección de patrones para fondos de pantalla, pensados
-                        para dispositivos móviles y escritorio.
-                      </p>
-                      <ul class="project-details">
-                        <li><strong>Año:</strong> 2022</li>
-                      </ul>
+                    <div class="meta-column">
+                      <div class="project-meta">
+                        <h3>Space Wallpaper</h3>
+                        <p class="project-description">
+                          Design project for a decorative pattern that can be
+                          repeated an infinite number of times and used as
+                          wallpaper.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -327,8 +302,6 @@
               </div>
               <div class="project-content">
                 <h3>Branding</h3>
-                <div class="project-tags"></div>
-                <!-- 'Ver más' removed — click the card to open the modal -->
                 <div class="card-back" hidden id="project-branding">
                   <div class="card-back-inner">
                     <div class="project-gallery" data-gallery>
@@ -349,12 +322,14 @@
                         alt="Branding - 4"
                       />
                     </div>
-                    <div class="project-meta">
-                      <h3>Branding</h3>
-                      <p class="project-description">
-                        Proyectos de identidad visual para clientes locales y
-                        editoriales, con énfasis en sistematización tipográfica.
-                      </p>
+                    <div class="meta-column">
+                      <div class="project-meta">
+                        <h3>Mochi Pochi</h3>
+                        <p class="project-description">
+                          Fun visual identity project for a matcha-flavored
+                          popcorn brand
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -369,9 +344,7 @@
                 />
               </div>
               <div class="project-content">
-                <h3>Diseño Editorial</h3>
-                <div class="project-tags"></div>
-                <!-- 'Ver más' removed — click the card to open the modal -->
+                <h3>Editorial Design</h3>
                 <div class="card-back" hidden id="project-editorial">
                   <div class="card-back-inner">
                     <div class="project-gallery" data-gallery>
@@ -384,12 +357,22 @@
                         alt="Editorial - 2"
                       />
                     </div>
-                    <div class="project-meta">
-                      <h3>Diseño Editorial</h3>
-                      <p class="project-description">
-                        Trabajos editoriales que incluyen maquetación,
-                        ilustración y diagramación para revistas.
-                      </p>
+                    <div class="meta-column">
+                      <div class="project-meta">
+                        <h3>The New Yorker + Editorial Design</h3>
+                        <p class="project-description">
+                          The New Yorker cover illustrates the dollarization of
+                          Ecuador in 2000. The figure replaces the iconic Statue
+                          of Liberty with El Panecillo, a representative
+                          monument of the country located in Quito.
+                        </p>
+                        <p>
+                          "Editorial Design" is an illustration created for a
+                          news article about an Excel document that went viral
+                          on social media and contains names and personal data
+                          about people who were unfaithful in Ecuador.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -404,35 +387,35 @@
                 />
               </div>
               <div class="project-content">
-                <h3>Ilustraciones</h3>
-                <div class="project-tags"></div>
-                <!-- 'Ver más' removed — click the card to open the modal -->
-                <div class="card-back" hidden id="project-ilustraciones">
+                <h3>Illustrations</h3>
+                <div class="card-back" hidden id="project-illustrations">
                   <div class="card-back-inner">
                     <div class="project-gallery" data-gallery>
                       <img
                         src="assets/images/Anne.jpeg"
-                        alt="Ilustraciones - 1"
+                        alt="Illustration - 1"
                       />
                       <img
                         src="assets/images/Ilustración letra.jpeg"
-                        alt="Ilustraciones - 2"
+                        alt="Illustration - 2"
                       />
                       <img
                         src="assets/images/Fanzine.jpeg"
-                        alt="Ilustraciones - 3"
+                        alt="Illustration - 3"
                       />
                       <img
                         src="assets/images/Stranger Icons.jpeg"
-                        alt="Ilustraciones - 4"
+                        alt="Illustration - 4"
                       />
                     </div>
-                    <div class="project-meta">
-                      <h3>Ilustraciones</h3>
-                      <p class="project-description">
-                        Compilación de ilustraciones personales, estudios de
-                        color y piezas experimentales.
-                      </p>
+                    <div class="meta-column">
+                      <div class="project-meta">
+                        <h3>Illustrations</h3>
+                        <p class="project-description">
+                          A compilation of personal illustrations, color
+                          studies, and experimental pieces.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -467,13 +450,11 @@
               >Say Hello</a
             >
             <div class="social-links">
-              <a href="#" aria-label="GitHub">GitHub</a>
               <a
-                href="https://www.instagram.com/___ali.designs/?igsh=b25oYmsyMTBpZ3U3&utm_source=qr#"
+                href="https://www.instagram.com/___ali.designs/"
                 aria-label="Instagram"
                 >Instagram</a
               >
-              <a href="#" aria-label="Twitter">Twitter</a>
             </div>
           </div>
         </div>
@@ -483,8 +464,11 @@
     <!-- Footer -->
     <footer class="footer">
       <div class="container">
-        <p>&copy; 2025 Alisson Román Developer</p>
-        <a href="#hero" class="back-to-top" aria-label="Back to top">↑</a>
+        <p>&copy; 2025 Alisson Román</p>
+
+        <div class="back-to-top-wrapper">
+          <a href="#hero" class="back-to-top" aria-label="Back to top">↑</a>
+        </div>
       </div>
     </footer>
     <!-- Project modal (hidden by default) -->
