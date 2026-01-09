@@ -190,6 +190,76 @@ function initScrollAnimations() {
   });
 }
 
+// ------------------------------------------------------------------
+// Contact SVG signature animation (trigger on enter viewport)
+// ------------------------------------------------------------------
+function initContactSignature() {
+  try {
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (prefersReduced) return;
+
+    const contactSection = document.getElementById("contact");
+    if (!contactSection) return;
+
+    // Keep observing so animation can replay each time the section enters view.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const svg = contactSection.querySelector(".demo-item svg");
+          if (!svg) return;
+          const shapes = svg.querySelectorAll("path, circle");
+
+          if (entry.isIntersecting) {
+            // Entering viewport -> animate to visible
+            shapes.forEach((shape) => {
+              let len = 0;
+              try {
+                len = shape.getTotalLength ? shape.getTotalLength() : 0;
+              } catch (err) {
+                len = 0;
+              }
+              if (len > 0) {
+                shape.dataset.signatureLength = String(len);
+                shape.classList.add("signature-animate");
+                shape.style.strokeDasharray = `${len} ${len}`;
+                shape.style.strokeDashoffset = `${len}`;
+                requestAnimationFrame(() =>
+                  setTimeout(() => (shape.style.strokeDashoffset = "0"), 60)
+                );
+              }
+            });
+          } else {
+            // Leaving viewport -> reset to hidden so it can animate again later
+            shapes.forEach((shape) => {
+              const len = parseFloat(shape.dataset.signatureLength || 0);
+              if (len > 0) {
+                // Temporarily disable transition to snap back
+                shape.style.transition = "none";
+                shape.style.strokeDashoffset = `${len}`;
+                // Force reflow
+                // eslint-disable-next-line no-unused-expressions
+                shape.getBoundingClientRect();
+                // Restore transition (let CSS handle timing)
+                shape.style.transition = "";
+              }
+            });
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(contactSection);
+  } catch (err) {
+    console.warn("initContactSignature failed", err);
+  }
+}
+
+// call this at the end of the file after DOM is ready
+document.addEventListener("DOMContentLoaded", initContactSignature);
+
 // ==========================================================================
 // 3. SMOOTH SCROLL FOR ANCHOR LINKS
 // ==========================================================================

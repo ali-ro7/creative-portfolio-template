@@ -124,6 +124,49 @@
   box-shadow: 0 18px 36px rgba(0, 0, 0, 0.18);
 }
 
+/* Contact SVG signature: set fill color to white and prepare stroke animation */
+.contact .demo-item svg {
+  width: 100%;
+  height: auto;
+}
+.contact .demo-item svg path,
+.contact .demo-item svg circle {
+  fill: #ffffff; /* set fill to white as requested */
+  stroke: #ffffff; /* ensure stroke is white too */
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.signature-animate {
+  stroke-dasharray: 0; /* will be set via JS to path length */
+  stroke-dashoffset: 0; /* will be set via JS */
+  transition: stroke-dashoffset 1.4s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signature-animate {
+    transition: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}
+/* Make the contact SVG smaller and centered; responsive clamp keeps it readable on all screens */
+.contact .demo-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.contact .demo-item svg {
+  /* smaller: at least 180px, scale up to 420px but remain responsive */
+  width: clamp(180px, 35vw, 420px);
+  height: auto;
+  display: block;
+}
+.contact .demo-item svg path,
+.contact .demo-item svg circle {
+  /* slightly thinner stroke on small screens */
+  stroke-width: 1.8px;
+}
 /* Make project cards clearly clickable: pointer cursor and slight pop on hover */
 .project-card {
   cursor: default; /* default non-pointer unless hovered */
@@ -255,6 +298,21 @@
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
   transform-origin: center center;
   z-index: 2;
+}
+
+/* Modal inner text: use muted gray for body/meta text so it's easier on the eyes */
+.project-modal .project-modal-content,
+.project-modal .project-meta,
+.project-modal .project-modal-content p,
+.project-modal .project-meta p,
+.project-modal .project-meta li,
+.project-modal .project-description {
+  color: var(--color-text-muted);
+}
+
+/* Keep headings in the modal slightly stronger for hierarchy */
+.project-modal .project-meta h3 {
+  color: var(--color-text-muted);
 }
 
 /* modal open animation: fade + scale */
