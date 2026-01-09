@@ -2,19 +2,19 @@
 # This file will be used to generate your entry in the course showroom
 
 # Basic information
-handle: your-github-username
-name: Your Full Name
-email: your-email@udit.es
+handle: ali-ro7
+name: Alisson Román
+email: alissonedith.roman@alumnos.udit.es
 
 # URLs (will be auto-generated if you follow naming conventions)
-github_url: https://github.com/your-username
-project_url: https://your-username.github.io/your-project-repo
-repository_url: https://github.com/your-username/your-project-repo
+github_url: https://github.com/ali-ro7
+project_url: https://ali-ro7.github.io/creative-portfolio-template/
+repository_url: https://github.com/ali-ro7/creative-portfolio-template.git
 
 # Project details
 title:
-  es: Título de tu Proyecto en Español
-  en: Your Project Title in English
+  es: Portafolio Creativo
+  en: Creative Portfolio template
 
 abstract:
   es: |

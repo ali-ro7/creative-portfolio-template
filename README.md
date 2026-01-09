@@ -1,4 +1,14 @@
-# Título
+# Creative Portfolio Template
 
 Encuentra aquí el proyecto desplegado: [https://ali-ro7.github.io/creative-portfolio-template/]
 (https://ali-ro7.github.io/creative-portfolio-template/)
+
+Autora: Alisson Román
+
+# Idea del Proyecto:
+
+La idea de este proyecto consiste en el diseño y desarrollo de un portfolio web personal como herramienta de presentación profesional, cuyo objetivo es mostrar de manera clara, atractiva y funcional los trabajos, habilidades y proceso creativo del autor. El sitio web estará pensado no solo como un espacio expositivo, sino también como una extensión de la identidad visual y personal, cuidando la coherencia estética, la usabilidad y la experiencia del usuario. A través de una estructura intuitiva y un diseño responsive, el portfolio permitirá comunicar el enfoque profesional, facilitar el contacto con potenciales clientes o empleadores y servir como soporte digital para la proyección laboral en el ámbito creativo.
+
+# Demo
+
+![alt text](<Demo 1.png>)
