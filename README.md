@@ -11,4 +11,4 @@ La idea de este proyecto consiste en el diseño y desarrollo de un portfolio web
 
 # Demo
 
-![alt text](<Demo 1.png>)
+![Demo 1](https://github.com/ali-ro7/creative-portfolio-template/blob/5f80b2ddd4c3a82ad1ccd490e8f244d0dff47341/assets/images/Demo%201.png)
